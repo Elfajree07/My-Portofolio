@@ -32,11 +32,11 @@
 
 ### 📜 Sertifikat Tangsel Bug Bounty 2026
 
-<img src="assets/'certificate kominfo kota tangsel.jpg'" width="700" alt="Certificate of Appreciation Tangsel Bug Bounty 2026">
+<img src="assets/sertifikat-tangsel.jpg'" width="700" alt="Certificate of Appreciation Tangsel Bug Bounty 2026">
 
 ### 📜 Sertifikat Universitas Mataram
 
-<img src="assets/'certificate universitas mataram.jpg'" width="700" alt="Certificate of Appreciation Universitas Mataram">
+<img src="assets/sertifikat-universitas-mataram.jpg'" width="700" alt="Certificate of Appreciation Universitas Mataram">
 
 </div>
 
