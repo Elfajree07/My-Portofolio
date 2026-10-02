@@ -6,10 +6,6 @@
 
 *Menemukan celah, melaporkannya secara etis, dan membantu membuat sistem lebih aman.*
 
-![Profile Views](https://komarev.com/ghpvc/?username=GANTI_USERNAME&label=Profile%20Views&color=red&style=flat)
-![Bug Bounty](https://img.shields.io/badge/Bug%20Bounty-Tangsel%202026-red?style=flat&logo=hackerone&logoColor=white)
-![Responsible Disclosure](https://img.shields.io/badge/Responsible-Disclosure-blue?style=flat)
-
 </div>
 
 ---
@@ -31,6 +27,18 @@
 | - | **Sertifikat of Appreciation: Universitas Mataram** | UPT PUSTIK Universitas Mataram | Bekerja sama dalam koordinasi temuan kerentanan dan melaporkannya secara etis kepada tim terkait |
 
 ---
+
+<div align="center">
+
+### 📜 Sertifikat Tangsel Bug Bounty 2026
+
+<img src="assets/'certificate kominfo kota tangsel.jpg'" width="700" alt="Certificate of Appreciation Tangsel Bug Bounty 2026">
+
+### 📜 Sertifikat Universitas Mataram
+
+<img src="assets/'certificate universitas mataram.jpg'" width="700" alt="Certificate of Appreciation Universitas Mataram">
+
+</div>
 
 ## 🛠️ Tools Pentest
 
