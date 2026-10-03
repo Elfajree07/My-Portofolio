@@ -8,7 +8,7 @@
 
 *Menemukan celah, melaporkannya secara etis, dan membantu membuat sistem lebih aman.*
 
-""Portfolio" (https://img.shields.io/badge/Buka_Portfolio-2bff88?style=for-the-badge&logo=gnubash&logoColor=black)" (https://elfajree07.github.io/My-Portofolio)
+[![Portfolio](https://img.shields.io/badge/Buka_Portfolio-2bff88?style=for-the-badge&logo=gnubash&logoColor=black)](https://elfajree07.github.io/My-Portofolio)
 
 </div>
 
