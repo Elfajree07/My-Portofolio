@@ -51,6 +51,21 @@ ul.l li:before{content:"> ";color:var(--g)}
 .quote{text-align:center;color:var(--gd);padding-top:8px}
 @media(max-width:520px){.body{padding:14px}.cmd{word-break:break-word}}
 @media(prefers-reduced-motion:reduce){.cur{animation:none}html{scroll-behavior:auto}}
+.profile-photo{
+    margin:12px 0 14px;
+}
+
+.profile-photo img{
+    width:110px;
+    height:110px;
+    object-fit:cover;
+    border-radius:50%;
+    border:2px solid var(--g);
+    box-shadow:
+        0 0 10px rgba(43,255,136,.35),
+        0 0 25px rgba(43,255,136,.12);
+    display:block;
+}
 </style>
 </head>
 <body>
@@ -61,6 +76,11 @@ ul.l li:before{content:"> ";color:var(--g)}
 <div class="body">
 <p class="cmd"><span class="p">┌──(<b>elfajree</b>)-[~]</span><br><span class="p">└─$</span> <span class="c">whoami</span></p>
 <h1>Fadhli Ajfari</h1>
+
+<div class="profile-photo">
+<img src="assets/20260614_101531.jpg" alt="Foto profil Fadhli Ajfari">
+</div>
+
 <p class="role"><span id="typed"></span><span class="cur" aria-hidden="true"></span></p>
 <p class="out mu">Menemukan celah, melaporkannya secara etis, dan membantu membuat sistem lebih aman.</p>
 </div>
