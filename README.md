@@ -27,12 +27,17 @@
 
 | Tahun | Penghargaan | Penyelenggara | Keterangan |
 |:---:|---|---|---|
+| 2026 | **Sertifikat Apresiasi: Kementerian Pekerjaan Umum** | PUCSIRT, Tim Tanggap Insiden Siber Kementerian PU | Menemukan dan melaporkan kerentanan sistem atau aplikasi milik Kementerian PU (5 Okt 2026) |
 | 2026 | **Certificate of Appreciation: Tangsel Bug Bounty 2026** | Kominfo Tangsel (Gerobug) | Melaporkan bug valid dengan severity **MEDIUM** secara bertanggung jawab dan etis (21 Sep 2026) |
-| - | **Sertifikat of Appreciation: Universitas Mataram** | UPT PUSTIK Universitas Mataram | Bekerja sama dalam koordinasi temuan kerentanan dan melaporkannya secara etis kepada tim terkait |
+| 2026 | **Sertifikat of Appreciation: Universitas Mataram** | UPT PUSTIK Universitas Mataram | Bekerja sama dalam koordinasi temuan kerentanan dan melaporkannya secara etis kepada tim terkait |
 
 ---
 
 <div align="center">
+
+### 📜 Sertifikat Kementerian Pekerjaan Umum
+
+<img src="assets/sertifikat-kemenpu.jpg" width="700" alt="Sertifikat Apresiasi Kementerian Pekerjaan Umum">
 
 ### 📜 Sertifikat Tangsel Bug Bounty 2026
 
