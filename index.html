@@ -119,10 +119,58 @@ ul.l li:before{content:"> ";color:var(--g)}
     font-size:14px;
     margin:0 0 4px;
 }
+
+/* ===== music player ===== */
+.pin{display:flex;align-items:center;gap:8px;margin:0 0 10px}
+.pin label{white-space:nowrap}
+.pin input{flex:1;min-width:0;background:transparent;border:0;border-bottom:1px dashed var(--line);color:var(--g);font:inherit;font-size:16px;padding:2px 0;caret-color:var(--g);outline:none}
+.pin input::placeholder{color:var(--mu);opacity:.7;font-size:13px}
+.pin input:focus{border-bottom-color:var(--g)}
+.plog{min-height:3.4em;max-height:9.5em;overflow:auto;margin-bottom:10px;font-size:13px;color:var(--mu)}
+.plog div{margin:0 0 2px;word-break:break-word}
+.plog .ok{color:var(--g)}.plog .er{color:var(--rd)}.plog .in{color:var(--tx)}
+.ptrack{color:var(--am);font-size:14px;margin-bottom:8px;word-break:break-word}
+.pctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:8px}
+.pctl button{background:transparent;border:1px solid var(--g);color:var(--g);font:inherit;font-size:13px;padding:3px 12px;border-radius:3px;cursor:pointer;transition:background .15s,color .15s}
+.pctl button:hover{background:var(--g);color:#001a0c}
+.pctl .tm{margin-left:auto;color:var(--mu);font-size:13px}
+.prow{display:flex;align-items:center;gap:10px;color:var(--mu);font-size:12px}
+.prow input[type=range]{flex:1;min-width:0;accent-color:var(--g);height:18px;cursor:pointer}
+.prow .vol{flex:0 0 90px}
+.eq{display:inline-flex;gap:2px;align-items:flex-end;height:12px;margin-right:6px;vertical-align:-1px}
+.eq i{width:3px;height:3px;background:var(--g);display:block}
+.playing .eq i{animation:eq .8s ease-in-out infinite}
+.playing .eq i:nth-child(2){animation-delay:.2s}.playing .eq i:nth-child(3){animation-delay:.4s}.playing .eq i:nth-child(4){animation-delay:.1s}
+@keyframes eq{0%,100%{height:3px}50%{height:12px}}
+@media(prefers-reduced-motion:reduce){.playing .eq i{animation:none;height:8px}}
 </style>
 </head>
 <body>
 <main class="wrap">
+
+<section class="win" id="player" aria-label="Pemutar musik">
+<div class="bar"><i></i><i></i><i></i><span>mpv: ~/music/lagu.mp3</span></div>
+<div class="body">
+<p class="cmd"><span class="p">┌──(<b>elfajree</b>)-[~/music]</span></p>
+<form id="pf" class="pin" autocomplete="off">
+<label for="pi" class="p">└─$</label>
+<input id="pi" type="text" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off" placeholder="ketik: play  (Enter)  |  help" aria-label="Terminal pemutar musik, ketik perintah lalu Enter">
+</form>
+<div id="plog" class="plog" role="log" aria-live="polite"></div>
+<div class="ptrack"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Nothing's Gonna Change My Love For You (Shania Yan Cover)</span></div>
+<div class="pctl">
+<button type="button" data-c="play">&#9654; play</button>
+<button type="button" data-c="pause">&#10074;&#10074; pause</button>
+<button type="button" data-c="stop">&#9632; stop</button>
+<span class="tm" id="ptime">00:00 / 00:00</span>
+</div>
+<div class="prow">
+<input type="range" id="pseek" min="0" max="1000" value="0" aria-label="Posisi lagu">
+<span>vol</span><input type="range" id="pvol" class="vol" min="0" max="100" value="70" aria-label="Volume">
+</div>
+<audio id="au" src="assets/lagu.mp3" preload="metadata"></audio>
+</div>
+</section>
 
 <section class="win" aria-label="Intro">
 <div class="bar"><i></i><i></i><i></i><span>elfajree@kali: ~/My-Portofolio</span></div>
@@ -245,6 +293,59 @@ i+=del?-1:1;
 setTimeout(t,del?35:75);
 }
 t();
+})();
+</script>
+<script>
+(function(){
+var au=document.getElementById("au"),pi=document.getElementById("pi"),log=document.getElementById("plog"),
+seek=document.getElementById("pseek"),vol=document.getElementById("pvol"),tm=document.getElementById("ptime"),
+box=document.getElementById("player"),hist=[],hi=0,drag=false;
+au.volume=.7;
+function say(t,c){var d=document.createElement("div");d.className=c||"";d.textContent=t;log.appendChild(d);
+while(log.children.length>40)log.removeChild(log.firstChild);log.scrollTop=log.scrollHeight}
+function f(n){if(!isFinite(n))n=0;var m=Math.floor(n/60),s=Math.floor(n%60);return(m<10?"0":"")+m+":"+(s<10?"0":"")+s}
+function upd(){tm.textContent=f(au.currentTime)+" / "+f(au.duration);
+if(!drag&&au.duration)seek.value=Math.round(au.currentTime/au.duration*1000)}
+function play(){var p=au.play();if(p&&p.catch)p.catch(function(e){say("[err] gagal memutar: "+(e&&e.name||"unknown"),"er")});}
+var C={
+help:function(){say("perintah: play | pause | stop | vol <0-100> | mute | loop | seek <mm:ss|detik> | info | clear","in")},
+play:function(){play();say("[ok] playing...","ok")},
+pause:function(){au.pause();say("[ok] paused","ok")},
+stop:function(){au.pause();au.currentTime=0;upd();say("[ok] stopped","ok")},
+vol:function(a){var v=parseInt(a[0],10);if(isNaN(v)||v<0||v>100)return say("usage: vol <0-100>","er");
+au.volume=v/100;vol.value=v;say("[ok] volume = "+v+"%","ok")},
+mute:function(){au.muted=!au.muted;say("[ok] mute = "+(au.muted?"on":"off"),"ok")},
+loop:function(){au.loop=!au.loop;say("[ok] loop = "+(au.loop?"on":"off"),"ok")},
+seek:function(a){var x=(a[0]||"").split(":"),t;
+if(x.length===2)t=parseInt(x[0],10)*60+parseInt(x[1],10);else t=parseInt(x[0],10);
+if(isNaN(t)||t<0)return say("usage: seek <mm:ss | detik>","er");
+au.currentTime=Math.min(t,au.duration||t);upd();say("[ok] seek -> "+f(au.currentTime),"ok")},
+info:function(){say("file: assets/lagu.mp3 | durasi: "+f(au.duration)+" | vol: "+Math.round(au.volume*100)+"% | loop: "+(au.loop?"on":"off"),"in")},
+clear:function(){log.textContent=""}
+};
+C.status=C.info;C.resume=C.play;C.cls=C.clear;
+function run(line){
+line=line.trim();if(!line)return;
+hist.push(line);hi=hist.length;say("$ "+line,"in");
+var a=line.split(/\s+/),c=a.shift().toLowerCase();
+if(C.hasOwnProperty(c))C[c](a);else say("bash: "+c+": command not found (ketik help)","er");
+}
+document.getElementById("pf").addEventListener("submit",function(e){e.preventDefault();run(pi.value);pi.value=""});
+pi.addEventListener("keydown",function(e){
+if(e.key==="ArrowUp"&&hist.length){e.preventDefault();hi=Math.max(0,hi-1);pi.value=hist[hi]||""}
+else if(e.key==="ArrowDown"&&hist.length){e.preventDefault();hi=Math.min(hist.length,hi+1);pi.value=hist[hi]||""}
+});
+box.addEventListener("click",function(e){var b=e.target.closest("button[data-c]");if(b)run(b.getAttribute("data-c"))});
+seek.addEventListener("input",function(){drag=true;if(au.duration)tm.textContent=f(seek.value/1000*au.duration)+" / "+f(au.duration)});
+seek.addEventListener("change",function(){if(au.duration)au.currentTime=seek.value/1000*au.duration;drag=false;upd()});
+vol.addEventListener("input",function(){au.volume=vol.value/100});
+au.addEventListener("timeupdate",upd);
+au.addEventListener("loadedmetadata",function(){upd();say("[ok] loaded assets/lagu.mp3 ("+f(au.duration)+")","ok")});
+au.addEventListener("play",function(){box.classList.add("playing")});
+au.addEventListener("pause",function(){box.classList.remove("playing")});
+au.addEventListener("ended",function(){box.classList.remove("playing");say("[ok] selesai","ok")});
+au.addEventListener("error",function(){say("[err] assets/lagu.mp3 tidak ditemukan / gagal dimuat","er")});
+say("mpv v1.0 ready. ketik 'play' lalu Enter, atau 'help'.","in");
 })();
 </script>
 </body>
